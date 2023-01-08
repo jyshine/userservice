@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,6 +20,8 @@ public class UserServiceImpl implements UserService{
     UserRepository userRepository;
 
     @Autowired
+    BCryptPasswordEncoder passwordEncoder;
+    @Autowired
     private ModelMapper modelMapper;
 
 
@@ -25,9 +30,9 @@ public class UserServiceImpl implements UserService{
         User buildUser = User.builder()
                 .email(userDto.getEmail())
                 .nickName(userDto.getNickName())
-                .password(userDto.getPassword())
+                .password(passwordEncoder.encode(userDto.getPassword()))
                 .userName(userDto.getUserName())
-                .phoneNumber(userDto.getPassword())
+                .phoneNumber(userDto.getPhoneNumber())
                 .build();
 
         userRepository.save(buildUser);
@@ -56,4 +61,8 @@ public class UserServiceImpl implements UserService{
         return new ModelMapper().map(userRepository.findByEmail(email), UserSearchDTO.class);
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
+    }
 }
