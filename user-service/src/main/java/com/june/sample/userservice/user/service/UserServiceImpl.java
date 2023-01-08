@@ -22,8 +22,16 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public boolean createUser(UserRegDTO userDto) {
-        User user = modelMapper.map(userDto, User.class);
-        userRepository.save(user);
+        User buildUser = User.builder()
+                .email(userDto.getEmail())
+                .nickName(userDto.getNickName())
+                .password(userDto.getPassword())
+                .userName(userDto.getUserName())
+                .phoneNumber(userDto.getPassword())
+                .build();
+
+        userRepository.save(buildUser);
+
         return true;
     }
 

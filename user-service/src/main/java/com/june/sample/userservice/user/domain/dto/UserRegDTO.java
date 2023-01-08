@@ -1,5 +1,6 @@
 package com.june.sample.userservice.user.domain.dto;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class UserRegDTO {
 
     @NotEmpty
+    @Email
     private String email;
 
     @NotEmpty

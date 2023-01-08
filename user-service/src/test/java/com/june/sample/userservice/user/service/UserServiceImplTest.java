@@ -26,6 +26,7 @@ class UserServiceImplTest {
     @Test
     void set_up(){
         UserRegDTO userDTO = UserRegDTO.builder()
+                .email("test@gmail.com")
                 .userName("홍길동")
                 .nickName("길동")
                 .password("1234")
@@ -33,6 +34,7 @@ class UserServiceImplTest {
                 .build();
 
         UserRegDTO userDTO2 = UserRegDTO.builder()
+                .email("test2@gmail.com")
                 .userName("김아무개")
                 .nickName("김김")
                 .password("1234")
@@ -46,6 +48,7 @@ class UserServiceImplTest {
     @Test
     void 간단_회원가입_테스트(){
         UserRegDTO userDTO3 = UserRegDTO.builder()
+                .email("test3@gmail.com")
                 .userName("김사랑")
                 .nickName("사랑")
                 .password("1234")
