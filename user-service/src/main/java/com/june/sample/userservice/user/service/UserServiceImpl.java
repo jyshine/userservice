@@ -50,9 +50,7 @@ public class UserServiceImpl implements UserService{
     public List<UserSearchDTO> getUserAll() {
         List<User> userList = userRepository.findAll();
         List<UserSearchDTO> userDTOList = new ArrayList<>();
-        userList.forEach(user -> {
-            userDTOList.add(modelMapper.map(user, UserSearchDTO.class));
-        });
+        userList.forEach(user -> userDTOList.add(modelMapper.map(user, UserSearchDTO.class)));
         return userDTOList;
     }
 
