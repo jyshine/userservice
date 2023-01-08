@@ -1,6 +1,5 @@
 package com.june.sample.userservice.user.service;
 
-import com.june.sample.userservice.core.exception.BizException;
 import com.june.sample.userservice.user.domain.dto.UserRegDTO;
 import com.june.sample.userservice.user.domain.dto.UserSearchDTO;
 import com.june.sample.userservice.user.domain.model.User;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,8 +28,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserSearchDTO searchUserByName(String name) {
-        User user = userRepository.findByName(name);
+    public UserSearchDTO searchUserByUserName(String name) {
+        User user = userRepository.findByUserName(name);
         return modelMapper.map(user, UserSearchDTO.class);
     }
 

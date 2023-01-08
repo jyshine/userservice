@@ -2,6 +2,7 @@ package com.june.sample.userservice.user.service;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import com.june.sample.UserServiceApplication;
 import com.june.sample.userservice.user.domain.dto.UserRegDTO;
 import com.june.sample.userservice.user.domain.dto.UserSearchDTO;
 import com.june.sample.userservice.user.domain.repository.UserRepository;
@@ -12,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 
-@SpringBootTest
+@SpringBootTest(classes = {UserServiceApplication.class})
 @Transactional
 @Rollback(value = false)
 class UserServiceImplTest {
@@ -25,14 +26,14 @@ class UserServiceImplTest {
     @Test
     void set_up(){
         UserRegDTO userDTO = UserRegDTO.builder()
-                .name("홍길동")
+                .userName("홍길동")
                 .nickName("길동")
                 .password("1234")
                 .phoneNumber("010-1111-2222")
                 .build();
 
         UserRegDTO userDTO2 = UserRegDTO.builder()
-                .name("김아무개")
+                .userName("김아무개")
                 .nickName("김김")
                 .password("1234")
                 .phoneNumber("010-2222-2222")
@@ -45,7 +46,7 @@ class UserServiceImplTest {
     @Test
     void 간단_회원가입_테스트(){
         UserRegDTO userDTO3 = UserRegDTO.builder()
-                .name("김사랑")
+                .userName("김사랑")
                 .nickName("사랑")
                 .password("1234")
                 .phoneNumber("010-3333-2222")
@@ -56,8 +57,8 @@ class UserServiceImplTest {
 
     @Test
     void 회원_조회_테스트(){
-        UserSearchDTO userDTO1 = userService.searchUserByName("홍길동");
-        assertThat(userDTO1.getName()).isEqualTo("홍길동");
+        UserSearchDTO userDTO1 = userService.searchUserByUserName("홍길동");
+        assertThat(userDTO1.getUserName()).isEqualTo("홍길동");
         assertThat(userDTO1.getNickName()).isEqualTo("길동");
     }
 

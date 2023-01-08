@@ -14,7 +14,7 @@ import lombok.Setter;
 public class UserSearchDTO {
     private Long id;
 
-    private String name;
+    private String userName;
 
     private String nickName;
 

@@ -8,7 +8,7 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 public interface UserService {
     boolean createUser(UserRegDTO userDto);
 
-    UserSearchDTO searchUserByName(String name);
+    UserSearchDTO searchUserByUserName(String name);
 
     List<UserSearchDTO> searchUserAll();
 }

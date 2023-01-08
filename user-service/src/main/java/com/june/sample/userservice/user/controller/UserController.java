@@ -26,8 +26,8 @@ public class UserController {
     }
 
     @GetMapping(value = USERS)
-    public RestResponse<UserSearchDTO> searchUser(@RequestParam String userName) {
-        return new RestResponse<>(userService.searchUserByName(userName));
+    public RestResponse<UserSearchDTO> searchUserByUserName(@RequestParam String userName) {
+        return new RestResponse<>(userService.searchUserByUserName(userName));
     }
 
 }

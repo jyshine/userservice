@@ -11,9 +11,11 @@ import lombok.NoArgsConstructor;
 @Data
 public class UserRegDTO {
 
+    private String email;
+
     private String password;
 
-    private String name;
+    private String userName;
 
     private String nickName;
 
