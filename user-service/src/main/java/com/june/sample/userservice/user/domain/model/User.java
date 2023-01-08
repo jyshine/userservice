@@ -1,7 +1,8 @@
-package com.june.sample.userservice.domain;
+package com.june.sample.userservice.user.domain.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,9 +12,16 @@ import lombok.Setter;
 @Getter
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
+
+    private String nickName;
+
+    private String password;
+
+    private String phoneNumber;
+
 
 }
