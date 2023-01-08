@@ -67,4 +67,5 @@ class UserServiceImplTest {
         List<UserSearchDTO> userDTOS = userService.searchUserAll();
         assertThat(userDTOS.size()).isEqualTo(3);
     }
+
 }
