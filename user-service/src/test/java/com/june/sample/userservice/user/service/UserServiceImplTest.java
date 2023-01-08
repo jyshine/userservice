@@ -67,8 +67,14 @@ class UserServiceImplTest {
 
     @Test
     void 회원_리스트_조회(){
-        List<UserSearchDTO> userDTOS = userService.searchUserAll();
+        List<UserSearchDTO> userDTOS = userService.getUserAll();
         assertThat(userDTOS.size()).isEqualTo(3);
+    }
+
+    @Test
+    void 회원_조회_이메일(){
+        UserSearchDTO userDTOS = userService.getUserDetailByEmail("test2@gmail.com");
+        assertThat("김아무개").isEqualTo(userDTOS.getUserName());
     }
 
 }

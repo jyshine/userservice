@@ -42,13 +42,18 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<UserSearchDTO> searchUserAll() {
+    public List<UserSearchDTO> getUserAll() {
         List<User> userList = userRepository.findAll();
         List<UserSearchDTO> userDTOList = new ArrayList<>();
         userList.forEach(user -> {
             userDTOList.add(modelMapper.map(user, UserSearchDTO.class));
         });
         return userDTOList;
+    }
+
+    @Override
+    public UserSearchDTO getUserDetailByEmail(String email) {
+        return new ModelMapper().map(userRepository.findByEmail(email), UserSearchDTO.class);
     }
 
 }

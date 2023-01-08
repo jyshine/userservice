@@ -9,5 +9,8 @@ public interface UserService {
 
     UserSearchDTO searchUserByUserName(String name);
 
-    List<UserSearchDTO> searchUserAll();
+    List<UserSearchDTO> getUserAll();
+
+    UserSearchDTO getUserDetailByEmail(String email);
+
 }
