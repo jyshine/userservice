@@ -1,9 +1,7 @@
 package com.june.sample.userservice.user.validation;
 
 import com.june.sample.userservice.user.domain.dto.UserRegDTO;
-import com.june.sample.userservice.user.domain.model.User;
 import java.util.Set;
-import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;

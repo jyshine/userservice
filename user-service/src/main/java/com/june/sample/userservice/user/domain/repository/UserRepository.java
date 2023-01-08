@@ -1,13 +1,13 @@
 package com.june.sample.userservice.user.domain.repository;
 
-import com.june.sample.userservice.user.domain.model.User;
+import com.june.sample.userservice.user.domain.model.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
-    User findByUserName(String name);
+    UserEntity findByUserName(String name);
 
-    User findByEmail(String email);
+    UserEntity findByEmail(String email);
 
 
 }

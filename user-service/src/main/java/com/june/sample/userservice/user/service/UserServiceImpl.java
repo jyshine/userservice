@@ -2,14 +2,12 @@ package com.june.sample.userservice.user.service;
 
 import com.june.sample.userservice.user.domain.dto.UserRegDTO;
 import com.june.sample.userservice.user.domain.dto.UserSearchDTO;
-import com.june.sample.userservice.user.domain.model.User;
+import com.june.sample.userservice.user.domain.model.UserEntity;
 import com.june.sample.userservice.user.domain.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +25,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public boolean createUser(UserRegDTO userDto) {
-        User buildUser = User.builder()
+        UserEntity buildUser = UserEntity.builder()
                 .email(userDto.getEmail())
                 .nickName(userDto.getNickName())
                 .password(passwordEncoder.encode(userDto.getPassword()))
@@ -42,13 +40,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserSearchDTO searchUserByUserName(String name) {
-        User user = userRepository.findByUserName(name);
+        UserEntity user = userRepository.findByUserName(name);
         return modelMapper.map(user, UserSearchDTO.class);
     }
 
     @Override
     public List<UserSearchDTO> getUserAll() {
-        List<User> userList = userRepository.findAll();
+        List<UserEntity> userList = userRepository.findAll();
         List<UserSearchDTO> userDTOList = new ArrayList<>();
         userList.forEach(user -> userDTOList.add(modelMapper.map(user, UserSearchDTO.class)));
         return userDTOList;
@@ -59,8 +57,4 @@ public class UserServiceImpl implements UserService{
         return new ModelMapper().map(userRepository.findByEmail(email), UserSearchDTO.class);
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
-    }
 }

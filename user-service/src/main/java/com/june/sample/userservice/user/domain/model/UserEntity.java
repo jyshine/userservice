@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "users")
 @Getter
 @NoArgsConstructor
-public class User {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,11 +35,12 @@ public class User {
     private String phoneNumber;
 
     @Builder
-    public User(String email, String userName, String nickName, String password, String phoneNumber) {
+    public UserEntity(String email, String userName, String nickName, String password, String phoneNumber) {
         this.email = email;
         this.userName = userName;
         this.nickName = nickName;
         this.password = password;
         this.phoneNumber = phoneNumber;
     }
+
 }
