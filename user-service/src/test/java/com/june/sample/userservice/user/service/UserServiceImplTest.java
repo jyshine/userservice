@@ -3,6 +3,7 @@ package com.june.sample.userservice.user.service;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import com.june.sample.UserServiceApplication;
+import com.june.sample.userservice.user.domain.dto.UserLoginDTO;
 import com.june.sample.userservice.user.domain.dto.UserRegDTO;
 import com.june.sample.userservice.user.domain.dto.UserSearchDTO;
 import com.june.sample.userservice.user.domain.repository.UserRepository;
@@ -73,7 +74,7 @@ class UserServiceImplTest {
 
     @Test
     void 회원_조회_이메일(){
-        UserSearchDTO userDTOS = userService.getUserDetailByEmail("test2@gmail.com");
+        UserLoginDTO userDTOS = userService.getUserDetailByEmail("test2@gmail.com");
         assertThat("김아무개").isEqualTo(userDTOS.getUserName());
     }
 
