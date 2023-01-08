@@ -2,6 +2,7 @@ package com.june.sample.userservice.user.controller;
 
 import static com.june.sample.userservice.core.web.Path.USERS;
 
+import com.june.sample.userservice.core.exception.BizException;
 import com.june.sample.userservice.core.web.RestResponse;
 import com.june.sample.userservice.user.domain.dto.UserRegDTO;
 import com.june.sample.userservice.user.domain.dto.UserSearchDTO;
@@ -20,7 +21,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping(value = USERS)
-    public RestResponse<Boolean> createUser(@RequestBody UserRegDTO userDTO){
+    public RestResponse<Boolean> createUser(@RequestBody UserRegDTO userDTO) {
         return new RestResponse<>(userService.createUser(userDTO));
     }
 

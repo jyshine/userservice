@@ -28,6 +28,8 @@ dependencies {
 
 	// model mapper
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.5'
+	// commons
+	implementation 'org.apache.commons:commons-lang3:3.12.0'
 
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	compileOnly 'org.projectlombok:lombok'
