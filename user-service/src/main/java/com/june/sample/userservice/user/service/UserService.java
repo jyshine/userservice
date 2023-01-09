@@ -1,5 +1,6 @@
 package com.june.sample.userservice.user.service;
 
+import com.june.sample.userservice.user.domain.dto.UserCodeDTO;
 import com.june.sample.userservice.user.domain.dto.UserLoginDTO;
 import com.june.sample.userservice.user.domain.dto.UserRegDTO;
 import com.june.sample.userservice.user.domain.dto.UserSearchDTO;
@@ -14,5 +15,7 @@ public interface UserService {
 
     UserLoginDTO getUserDetailByEmail(String email);
 
-    String getCertificationCodeByUserPhoneNumber(String phoneNumber);
+    UserCodeDTO getCertificationCodeByUserPhoneNumber(String phoneNumber);
+
+    boolean checkCertificationCode(UserCodeDTO userCodeDTO);
 }

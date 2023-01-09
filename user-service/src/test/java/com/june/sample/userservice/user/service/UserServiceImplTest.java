@@ -6,6 +6,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import com.june.sample.UserServiceApplication;
 import com.june.sample.userservice.core.enums.user.UserRoleType;
 import com.june.sample.userservice.core.exception.ValidationException;
+import com.june.sample.userservice.user.domain.dto.UserCodeDTO;
 import com.june.sample.userservice.user.domain.dto.UserLoginDTO;
 import com.june.sample.userservice.user.domain.dto.UserRegDTO;
 import com.june.sample.userservice.user.domain.dto.UserSearchDTO;
@@ -87,8 +88,8 @@ class UserServiceImplTest {
     @Test
     void 회원_전화번호_인증(){
         String phoneNumber = "010-3333-8888";
-        String certiNumber = userService.getCertificationCodeByUserPhoneNumber(phoneNumber);
-        assertThat("0000").isEqualTo(certiNumber);
+        UserCodeDTO certificationCodeByUserPhoneNumber = userService.getCertificationCodeByUserPhoneNumber(phoneNumber);
+        assertThat("0000").isEqualTo(certificationCodeByUserPhoneNumber.getCode());
     }
 
     @Test

@@ -34,8 +34,9 @@ public class OAuthResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .antMatchers(HttpMethod.POST , "/api/v1/users").authenticated()
-                .antMatchers("/api/**/**")
+                .antMatchers(HttpMethod.POST , Path.API+ Path.VERSION+"/users",Path.API+Path.VERSION+"/users/sendCode",Path.USERS_SEND_CODE_CHECK).not().authenticated()
+//                .antMatchers(HttpMethod.POST , "/api/v1/users/sendCode").authenticated()
+                .antMatchers(Path.API+Path.VERSION+"/**")
                 .hasAnyAuthority(UserRoleType.M.name(),UserRoleType.A.name(),UserRoleType.U.name())
                 ;
     }

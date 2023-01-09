@@ -13,6 +13,7 @@ import javax.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity(name = "users")
 @Getter
@@ -41,6 +42,7 @@ public class UserEntity {
     /** 권한 */
     @Column(name="role")
     @Enumerated(EnumType.STRING)
+    @Setter
     private UserRoleType role;
 
     @Builder

@@ -7,6 +7,9 @@ public enum UserRoleType {
     /** 일반 유저 */
     U,
 
+    /** 전화번호 미인증 유저 */
+    N,
+
     /** 관리자 */
     A
 }

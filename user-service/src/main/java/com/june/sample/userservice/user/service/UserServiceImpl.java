@@ -1,6 +1,9 @@
 package com.june.sample.userservice.user.service;
 
+import com.june.sample.userservice.core.enums.user.UserRoleType;
+import com.june.sample.userservice.core.exception.BizException;
 import com.june.sample.userservice.core.exception.ValidationException;
+import com.june.sample.userservice.user.domain.dto.UserCodeDTO;
 import com.june.sample.userservice.user.domain.dto.UserLoginDTO;
 import com.june.sample.userservice.user.domain.dto.UserRegDTO;
 import com.june.sample.userservice.user.domain.dto.UserSearchDTO;
@@ -38,7 +41,7 @@ public class UserServiceImpl implements UserService{
                 .password(passwordEncoder.encode(userDto.getPassword()))
                 .userName(userDto.getUserName())
                 .phoneNumber(userDto.getPhoneNumber())
-                .role(userDto.getRole())
+                .role(UserRoleType.N)
                 .build();
 
         userRepository.save(buildUser);
@@ -66,14 +69,40 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public String getCertificationCodeByUserPhoneNumber(String phoneNumber) {
+    public UserCodeDTO getCertificationCodeByUserPhoneNumber(String phoneNumber) {
         Optional<UserEntity> byPhoneNumber = userRepository.findByPhoneNumber(phoneNumber);
+        UserCodeDTO userCodeDTO = new UserCodeDTO();
         if(byPhoneNumber.isPresent()){
             throw ValidationException
                     .withUserMessage("이미 등록된 연락처가 있습니다.")
                     .build();
         }
-        return certificationCode;
+
+        userCodeDTO.setCode(certificationCode);
+        userCodeDTO.setPhoneNumber(phoneNumber);
+
+        return userCodeDTO;
+    }
+
+    @Override
+    public boolean checkCertificationCode(UserCodeDTO userCodeDTO) {
+        Optional<UserEntity> byPhoneNumber = userRepository.findByPhoneNumber(userCodeDTO.getPhoneNumber());
+
+        if(byPhoneNumber.isPresent() && userCodeDTO.getCode().equals(certificationCode)) {
+            UserEntity user = byPhoneNumber.get();
+
+            if (!user.getRole().equals(UserRoleType.N)){
+                throw BizException
+                        .withUserMessageKey("api.users.code.check")
+                        .build();
+            }
+
+            user.setRole(UserRoleType.U);
+            userRepository.save(user);
+
+            return true;
+        }
+        return false;
     }
 
 }
