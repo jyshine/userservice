@@ -33,7 +33,7 @@ public class OAuthResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST).permitAll()
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers(HttpMethod.POST , "/api/v1/users").authenticated()
                 .antMatchers("/api/**/**")
                 .hasAnyAuthority(UserRoleType.M.name(),UserRoleType.A.name(),UserRoleType.U.name())

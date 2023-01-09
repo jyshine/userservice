@@ -51,7 +51,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         // TokenAuthenticationFilter will ignore the below paths
         web.ignoring().antMatchers(
-                "/ping"
+                "/ping",
+                "/swagger/**",
+                "/swagger-ui.html/**",
+                "/swagger-resources/**"
         );
         web.ignoring().antMatchers(
                 "/webjars/**",

@@ -1,5 +1,6 @@
 package com.june.sample.userservice.home;
 
+import com.june.sample.userservice.core.web.RestResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -7,7 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeController {
 
     @RequestMapping("/ping")
-    public String home(){
-        return "welcome!";
+    public RestResponse<String> ping(){
+        return new RestResponse<>("OK");
     }
+
 }
