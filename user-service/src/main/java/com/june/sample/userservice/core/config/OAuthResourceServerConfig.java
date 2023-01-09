@@ -33,10 +33,10 @@ public class OAuthResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(Path.API+Path.VERSION+"/users").permitAll()
-                .antMatchers(HttpMethod.POST , Path.API+Path.VERSION+"/auth/**",
-                        Path.API+Path.VERSION+"/*")
-                    .authenticated()
+                .antMatchers(HttpMethod.POST).permitAll()
+                .antMatchers(HttpMethod.POST , "/api/v1/users").authenticated()
+                .antMatchers("/api/**/**")
+                .hasAnyAuthority(UserRoleType.M.name(),UserRoleType.A.name(),UserRoleType.U.name())
                 ;
     }
 }

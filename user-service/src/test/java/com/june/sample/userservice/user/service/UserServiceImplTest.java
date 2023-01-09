@@ -3,6 +3,7 @@ package com.june.sample.userservice.user.service;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import com.june.sample.UserServiceApplication;
+import com.june.sample.userservice.core.enums.user.UserRoleType;
 import com.june.sample.userservice.user.domain.dto.UserLoginDTO;
 import com.june.sample.userservice.user.domain.dto.UserRegDTO;
 import com.june.sample.userservice.user.domain.dto.UserSearchDTO;
@@ -32,6 +33,7 @@ class UserServiceImplTest {
                 .nickName("길동")
                 .password("1234")
                 .phoneNumber("010-1111-2222")
+                .role(UserRoleType.U)
                 .build();
 
         UserRegDTO userDTO2 = UserRegDTO.builder()
@@ -40,6 +42,7 @@ class UserServiceImplTest {
                 .nickName("김김")
                 .password("1234")
                 .phoneNumber("010-2222-2222")
+                .role(UserRoleType.U)
                 .build();
 
         userService.createUser(userDTO);
@@ -54,6 +57,7 @@ class UserServiceImplTest {
                 .nickName("사랑")
                 .password("1234")
                 .phoneNumber("010-3333-2222")
+                .role(UserRoleType.M)
                 .build();
         boolean isSuccess = userService.createUser(userDTO3);
         assertThat(isSuccess).isTrue();

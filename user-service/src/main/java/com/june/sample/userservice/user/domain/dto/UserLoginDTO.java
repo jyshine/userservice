@@ -1,7 +1,5 @@
 package com.june.sample.userservice.user.domain.dto;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Data

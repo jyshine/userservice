@@ -1,6 +1,10 @@
 package com.june.sample.userservice.user.domain.model;
 
+import com.june.sample.userservice.core.enums.user.UserRoleType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,13 +38,19 @@ public class UserEntity {
     @NotEmpty
     private String phoneNumber;
 
+    /** 권한 */
+    @Column(name="role")
+    @Enumerated(EnumType.STRING)
+    private UserRoleType role;
+
     @Builder
-    public UserEntity(String email, String userName, String nickName, String password, String phoneNumber) {
+    public UserEntity(String email, String userName, String nickName, String password, String phoneNumber,UserRoleType role) {
         this.email = email;
         this.userName = userName;
         this.nickName = nickName;
         this.password = password;
         this.phoneNumber = phoneNumber;
+        this.role = role;
     }
 
 }

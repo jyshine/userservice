@@ -4,9 +4,8 @@ import com.june.sample.userservice.user.domain.dto.UserLoginDTO;
 import com.june.sample.userservice.user.domain.dto.UserRegDTO;
 import com.june.sample.userservice.user.domain.dto.UserSearchDTO;
 import java.util.List;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface UserService extends UserDetailsService {
+public interface UserService {
     boolean createUser(UserRegDTO userDto);
 
     UserSearchDTO searchUserByUserName(String name);

@@ -5,7 +5,7 @@ public enum UserRoleType {
     M,
 
     /** 일반 유저 */
-    S,
+    U,
 
     /** 관리자 */
     A

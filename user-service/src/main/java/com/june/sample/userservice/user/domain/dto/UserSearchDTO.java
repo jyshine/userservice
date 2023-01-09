@@ -1,5 +1,6 @@
 package com.june.sample.userservice.user.domain.dto;
 
+import com.june.sample.userservice.core.enums.user.UserRoleType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,4 +20,6 @@ public class UserSearchDTO {
     private String nickName;
 
     private String phoneNumber;
+
+    private UserRoleType role;
 }

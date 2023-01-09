@@ -1,6 +1,7 @@
 package com.june.sample.userservice.user.controller;
 
 import static com.june.sample.userservice.core.web.Path.USERS;
+import static com.june.sample.userservice.core.web.Path.USERS_SEARCH;
 
 import com.june.sample.userservice.core.web.RestResponse;
 import com.june.sample.userservice.user.domain.dto.UserRegDTO;
@@ -25,7 +26,7 @@ public class UserController {
         return new RestResponse<>(userService.createUser(userDTO));
     }
 
-    @GetMapping(value = USERS)
+    @GetMapping(value = USERS_SEARCH)
     public RestResponse<UserSearchDTO> searchUserByUserName(@RequestParam String userName) {
         return new RestResponse<>(userService.searchUserByUserName(userName));
     }

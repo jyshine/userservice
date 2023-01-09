@@ -1,5 +1,6 @@
 package com.june.sample.userservice.user.domain.dto;
 
+import com.june.sample.userservice.core.enums.user.UserRoleType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -28,4 +29,6 @@ public class UserRegDTO {
 
     @NotEmpty
     private String phoneNumber;
+
+    private UserRoleType role;
 }

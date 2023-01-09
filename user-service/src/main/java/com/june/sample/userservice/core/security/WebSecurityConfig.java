@@ -1,6 +1,5 @@
 package com.june.sample.userservice.core.security;
 
-import com.june.sample.userservice.user.service.UserService;
 import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ import org.springframework.web.filter.CorsFilter;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserService userDetailsService;
+    private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -71,7 +70,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public FilterRegistrationBean customCorsFilter() {
         // oauth 환경에서 cors설정은 configure( HttpSecurity ) 로는 가능하지 않고,
         // cors 필터가 다른 oauth 설정보다 선행하도록 하기 위해서, 별도의 FilterRegistrationBean 을 사용함.
-
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
         CorsConfiguration config = new CorsConfiguration();
