@@ -1,5 +1,6 @@
 package com.june.sample.userservice.user.service;
 
+import com.june.sample.userservice.core.exception.ValidationException;
 import com.june.sample.userservice.user.domain.dto.UserLoginDTO;
 import com.june.sample.userservice.user.domain.dto.UserRegDTO;
 import com.june.sample.userservice.user.domain.dto.UserSearchDTO;
@@ -7,12 +8,16 @@ import com.june.sample.userservice.user.domain.model.UserEntity;
 import com.june.sample.userservice.user.domain.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService{
 
     @Autowired
@@ -22,6 +27,8 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private ModelMapper modelMapper;
 
+    @Value("${common.certification.code:}")
+    private String certificationCode;
 
     @Override
     public boolean createUser(UserRegDTO userDto) {
@@ -56,6 +63,17 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserLoginDTO getUserDetailByEmail(String email) {
         return new ModelMapper().map(userRepository.findByEmail(email).get(), UserLoginDTO.class);
+    }
+
+    @Override
+    public String getCertificationCodeByUserPhoneNumber(String phoneNumber) {
+        Optional<UserEntity> byPhoneNumber = userRepository.findByPhoneNumber(phoneNumber);
+        if(byPhoneNumber.isPresent()){
+            throw ValidationException
+                    .withUserMessage("이미 등록된 연락처가 있습니다.")
+                    .build();
+        }
+        return certificationCode;
     }
 
 }

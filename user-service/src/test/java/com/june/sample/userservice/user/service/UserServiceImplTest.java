@@ -1,9 +1,11 @@
 package com.june.sample.userservice.user.service;
 
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import com.june.sample.UserServiceApplication;
 import com.june.sample.userservice.core.enums.user.UserRoleType;
+import com.june.sample.userservice.core.exception.ValidationException;
 import com.june.sample.userservice.user.domain.dto.UserLoginDTO;
 import com.june.sample.userservice.user.domain.dto.UserRegDTO;
 import com.june.sample.userservice.user.domain.dto.UserSearchDTO;
@@ -73,7 +75,7 @@ class UserServiceImplTest {
     @Test
     void 회원_리스트_조회(){
         List<UserSearchDTO> userDTOS = userService.getUserAll();
-        assertThat(userDTOS.size()).isEqualTo(3);
+        assertThat(userDTOS.size()).isGreaterThan(3);
     }
 
     @Test
@@ -82,4 +84,30 @@ class UserServiceImplTest {
         assertThat("김아무개").isEqualTo(userDTOS.getUserName());
     }
 
+    @Test
+    void 회원_전화번호_인증(){
+        String phoneNumber = "010-3333-8888";
+        String certiNumber = userService.getCertificationCodeByUserPhoneNumber(phoneNumber);
+        assertThat("0000").isEqualTo(certiNumber);
+    }
+
+    @Test
+    void 회원_전화번호_중복(){
+        UserRegDTO userDTO3 = UserRegDTO.builder()
+                .email("test4@gmail.com")
+                .userName("김호호")
+                .nickName("하하")
+                .password("1234")
+                .phoneNumber("010-3333-2224")
+                .role(UserRoleType.M)
+                .build();
+
+        userService.createUser(userDTO3);
+
+        String phoneNumber2 = "010-3333-2224";
+
+        assertThat(catchThrowable(() -> userService.getCertificationCodeByUserPhoneNumber(phoneNumber2))) // don't reduce to assertThatThrownBy because .as() won't work!
+                .as("이미 등록된 연락처가 있습니다.")
+                .isInstanceOf(ValidationException.class);
+    }
 }

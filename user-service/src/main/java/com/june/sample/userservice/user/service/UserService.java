@@ -14,4 +14,5 @@ public interface UserService {
 
     UserLoginDTO getUserDetailByEmail(String email);
 
+    String getCertificationCodeByUserPhoneNumber(String phoneNumber);
 }
