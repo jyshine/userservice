@@ -11,6 +11,7 @@ import com.june.sample.userservice.user.domain.dto.UserCodeDTO;
 import com.june.sample.userservice.user.domain.dto.UserRegDTO;
 import com.june.sample.userservice.user.domain.dto.UserSearchDTO;
 import com.june.sample.userservice.user.service.UserService;
+import com.sun.xml.bind.v2.TODO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
@@ -53,8 +54,7 @@ public class UserController {
 
     @ApiOperation(value = "비밀번호 찾기 (재설정)")
     @PostMapping(value = USERS_CHANGE_PASSWORD)
-    public RestResponse<Boolean> usersChangePassword(@RequestBody UserCodeDTO userCodeDTO) {
-
-        return new RestResponse<>(userService.checkCertificationCode(userCodeDTO));
+    public RestResponse<Boolean> changeUserPassword(@RequestBody UserRegDTO userRegDTO) {
+        return new RestResponse<>(userService.changeUserPassword(userRegDTO));
     }
 }

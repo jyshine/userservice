@@ -1,6 +1,7 @@
 package com.june.sample.userservice.user.domain.model;
 
 import com.june.sample.userservice.core.enums.user.CertiType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,6 +21,7 @@ public class ValidationPhoneEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     String phoneNumber;
 
     @Setter

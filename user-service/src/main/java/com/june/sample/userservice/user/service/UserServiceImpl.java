@@ -2,6 +2,7 @@ package com.june.sample.userservice.user.service;
 
 import com.june.sample.userservice.core.enums.user.CertiType;
 import com.june.sample.userservice.core.enums.user.UserRoleType;
+import com.june.sample.userservice.core.exception.BizException;
 import com.june.sample.userservice.core.exception.ValidationException;
 import com.june.sample.userservice.user.domain.dto.UserCodeDTO;
 import com.june.sample.userservice.user.domain.dto.UserLoginDTO;
@@ -19,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -43,19 +43,23 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public boolean createUser(UserRegDTO userDto) {
-        UserEntity buildUser = UserEntity.builder()
-                .email(userDto.getEmail())
-                .nickName(userDto.getNickName())
-                .password(passwordEncoder.encode(userDto.getPassword()))
-                .userName(userDto.getUserName())
-                .phoneNumber(userDto.getPhoneNumber())
-                .role(UserRoleType.N)
+        if(checkValidationPhone(userDto.getPhoneNumber())){
+            UserEntity buildUser = UserEntity.builder()
+                    .email(userDto.getEmail())
+                    .nickName(userDto.getNickName())
+                    .password(passwordEncoder.encode(userDto.getPassword()))
+                    .userName(userDto.getUserName())
+                    .phoneNumber(userDto.getPhoneNumber())
+                    .role(UserRoleType.U)
+                    .build();
+            buildUser.setCreatedDate(LocalDateTime.now());
+            buildUser.setDeleted(false);
+            userRepository.save(buildUser);
+            return true;
+        } throw BizException
+                .withUserMessageKey("api.users.phone.auth")
+                .withSystemMessage("전화번호 인증 실패")
                 .build();
-        buildUser.setCreatedDate(LocalDateTime.now());
-        buildUser.setDeleted(false);
-        userRepository.save(buildUser);
-
-        return true;
     }
 
     @Override
@@ -118,6 +122,34 @@ public class UserServiceImpl implements UserService{
             phoneEntity.setCertiType(CertiType.CHECKED);
             phoneEntity.setUpdatedDate(LocalDateTime.now());
             validationPhoneRepository.save(phoneEntity);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean changeUserPassword(UserRegDTO userRegDTO) {
+        if(checkValidationPhone(userRegDTO.getPhoneNumber())){
+            UserEntity byPhoneNumber = userRepository.findByPhoneNumber(userRegDTO.getPhoneNumber())
+                    .orElseThrow(() -> ValidationException.withUserMessage("전화번호 인증 대상이 없습니다.").build());
+
+            byPhoneNumber.changeUserPassword(passwordEncoder.encode(userRegDTO.getPassword()));
+
+            userRepository.save(byPhoneNumber);
+
+            return true;
+        } throw BizException
+            .withUserMessageKey("api.users.phone.auth")
+            .withSystemMessage("전화번호 인증 실패")
+            .build();
+    }
+
+    private boolean checkValidationPhone(String phoneNumber) {
+        ValidationPhoneEntity byPhoneNumber = validationPhoneRepository.findByPhoneNumber(phoneNumber)
+                .orElseThrow(() -> ValidationException.withUserMessage("전화번호 인증 대상이 없습니다.").build());
+        if(byPhoneNumber.getCertiType().equals(CertiType.CHECKED)){
+            byPhoneNumber.setCertiType(CertiType.SUCCESS);
+            validationPhoneRepository.save(byPhoneNumber);
             return true;
         }
         return false;

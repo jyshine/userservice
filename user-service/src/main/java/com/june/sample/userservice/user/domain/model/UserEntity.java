@@ -25,18 +25,21 @@ public class UserEntity extends BaseEntity{
 
     @Email
     @NotEmpty
+    @Column(unique = true)
     private String email;
 
     @NotEmpty
     private String userName;
 
     @NotEmpty
+    @Column(unique = true)
     private String nickName;
 
     @NotEmpty
     private String password;
 
     @NotEmpty
+    @Column(unique = true)
     private String phoneNumber;
 
     /** 권한 */
@@ -53,6 +56,10 @@ public class UserEntity extends BaseEntity{
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.role = role;
+    }
+
+    public void changeUserPassword(String password) {
+        this.password = password;
     }
 
 }
