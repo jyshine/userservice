@@ -43,6 +43,7 @@ public class SwaggerConfig {
                 .version("1.0")
                 .description("OAuth2 Authorize 방법 :" +
                         "<ul>" +
+                        "<li>username은 전화번호를 입력해주세요. </li>" +
                         "<li><code>$ curl -u front-ui:front-ui! http://localhost:8080/oauth/token -F grant_type=password -F username=XXXX -F password=YYYY</code></li>" +
                         "<li>access_token 값을 복사</li>" +
                         "<li>[Authorize] 버튼 누른 뒤 apiKey value 값에 \"Bearer {access_token}\" 입력 </li>" +
