@@ -1,7 +1,6 @@
 package com.june.sample.userservice.user.domain.model;
 
 import com.june.sample.userservice.core.enums.user.UserRoleType;
-import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

@@ -30,4 +30,5 @@ public class UserRegDTO {
     @NotEmpty
     private String phoneNumber;
 
+    private UserRoleType role;
 }
