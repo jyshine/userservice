@@ -28,13 +28,13 @@ $ sudo ./gradlew bootRun
 - API 문서 확인
 http://localhost:8080/swagger-ui.html#/
 - API 요청 순서 
- 1) 회원가입: 전화번호 인증 전송 -> 전화번호 인증 확인 -> 회원 가입
- 2) 로그인
+    1)회원가입: 전화번호 인증 전송 -> 전화번호 인증 확인 -> 회원 가입
+    2)로그인
 ```
 $ curl -u front-ui:front-ui! http://localhost:8080/oauth/token -F grant_type=password -F username=XXXX -F password=YYYY
 ```
- 3) 내 정보 보기 기능: 토큰 입력 -> 내 정보 보기
- 4) 전화번호 인증 전송 -> 전화번호 인증 확인 -> 비밀번호 재설정
+    3)내 정보 보기 기능: 토큰 입력 -> 내 정보 보기
+    4)전화번호 인증 전송 -> 전화번호 인증 확인 -> 비밀번호 재설정
 
 
 
