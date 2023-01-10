@@ -2,6 +2,9 @@
 **1. 프로젝트소개**
 회원 가입 및 비밀번호 재설정이 가능한 API 샘플 프로젝트입니다.
 
+
+
+
 **2. 실행 방법**
 - 사전 설치 : JDK 15, Docker, Gradle 7.6
 - 프로젝트 git clone
@@ -25,18 +28,24 @@ $ sudo ./gradlew bootRun
 - API 문서 확인
 http://localhost:8080/swagger-ui.html#/
 - API 요청 순서 
-1) 회원가입: 전화번호 인증 전송 -> 전화번호 인증 확인 -> 회원 가입
-2) 로그인
+ 1) 회원가입: 전화번호 인증 전송 -> 전화번호 인증 확인 -> 회원 가입
+ 2) 로그인
 ```
 $ curl -u front-ui:front-ui! http://localhost:8080/oauth/token -F grant_type=password -F username=XXXX -F password=YYYY
 ```
-3) 내 정보 보기 기능: 토큰 입력 -> 내 정보 보기
-4) 전화번호 인증 전송 -> 전화번호 인증 확인 -> 비밀번호 재설정
+ 3) 내 정보 보기 기능: 토큰 입력 -> 내 정보 보기
+ 4) 전화번호 인증 전송 -> 전화번호 인증 확인 -> 비밀번호 재설정
+
+
+
 
 **3. 사용 기술**
 - Java
 - SpringBoot
 - Spring Security
+
+
+
 
 **4. 요구사항**
 - 회원 가입 기능
