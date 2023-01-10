@@ -45,6 +45,7 @@ public class UserServiceImpl implements UserService{
                 .role(UserRoleType.N)
                 .build();
         buildUser.setCreatedDate(LocalDateTime.now());
+        buildUser.setDeleted(false);
         userRepository.save(buildUser);
 
         return true;
