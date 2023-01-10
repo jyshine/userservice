@@ -1,14 +1,16 @@
 package com.june.sample.userservice.user.service;
 
+import com.june.sample.userservice.core.enums.user.CertiType;
 import com.june.sample.userservice.core.enums.user.UserRoleType;
-import com.june.sample.userservice.core.exception.BizException;
 import com.june.sample.userservice.core.exception.ValidationException;
 import com.june.sample.userservice.user.domain.dto.UserCodeDTO;
 import com.june.sample.userservice.user.domain.dto.UserLoginDTO;
 import com.june.sample.userservice.user.domain.dto.UserRegDTO;
 import com.june.sample.userservice.user.domain.dto.UserSearchDTO;
 import com.june.sample.userservice.user.domain.model.UserEntity;
+import com.june.sample.userservice.user.domain.model.ValidationPhoneEntity;
 import com.june.sample.userservice.user.domain.repository.UserRepository;
+import com.june.sample.userservice.user.domain.repository.ValidationPhoneRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +29,10 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    ValidationPhoneRepository validationPhoneRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -72,37 +79,45 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserCodeDTO getCertificationCodeByUserPhoneNumber(String phoneNumber) {
-        Optional<UserEntity> byPhoneNumber = userRepository.findByPhoneNumber(phoneNumber);
-        UserCodeDTO userCodeDTO = new UserCodeDTO();
-        if(byPhoneNumber.isPresent()){
-            throw ValidationException
-                    .withUserMessage("이미 등록된 연락처가 있습니다.")
-                    .build();
+        Optional<ValidationPhoneEntity> phoneEntity = validationPhoneRepository.findByPhoneNumber(phoneNumber);
+
+        if(phoneEntity.isPresent()){
+            ValidationPhoneEntity findValidPhone = phoneEntity.get();
+            findValidPhone.setCertiType(CertiType.SEND_CODE);
+            findValidPhone.setCertificationCode(certificationCode);
+            findValidPhone.setUpdatedDate(LocalDateTime.now());
+            validationPhoneRepository.save(findValidPhone);
+        }else {
+            ValidationPhoneEntity validationPhoneEntity = ValidationPhoneEntity.builder()
+                    .phoneNumber(phoneNumber)
+                    .certificationCode(certificationCode)
+                    .certiType(CertiType.SEND_CODE).build();
+            validationPhoneEntity.setCreatedDate(LocalDateTime.now());
+            validationPhoneEntity.setDeleted(false);
+            validationPhoneRepository.save(validationPhoneEntity);
         }
 
-
+        UserCodeDTO userCodeDTO = new UserCodeDTO();
         userCodeDTO.setCode(certificationCode);
         userCodeDTO.setPhoneNumber(phoneNumber);
 
         return userCodeDTO;
     }
 
+
     @Override
     public boolean checkCertificationCode(UserCodeDTO userCodeDTO) {
-        Optional<UserEntity> byPhoneNumber = userRepository.findByPhoneNumber(userCodeDTO.getPhoneNumber());
+        ValidationPhoneEntity phoneEntity = validationPhoneRepository.
+                findByPhoneNumberAndCertiType(userCodeDTO.getPhoneNumber(),CertiType.SEND_CODE)
+                .orElseThrow(() ->
+                        ValidationException
+                        .withUserMessage("전화번호 인증 대상이 없습니다.")
+                        .build());
 
-        if(byPhoneNumber.isPresent() && userCodeDTO.getCode().equals(certificationCode)) {
-            UserEntity user = byPhoneNumber.get();
-
-            if (!user.getRole().equals(UserRoleType.N)){
-                throw BizException
-                        .withUserMessageKey("api.users.code.check")
-                        .build();
-            }
-            user.setUpdatedDate(LocalDateTime.now());
-            user.setRole(UserRoleType.U);
-            userRepository.save(user);
-
+        if (userCodeDTO.getCode().equals(phoneEntity.getCertificationCode())) {
+            phoneEntity.setCertiType(CertiType.CHECKED);
+            phoneEntity.setUpdatedDate(LocalDateTime.now());
+            validationPhoneRepository.save(phoneEntity);
             return true;
         }
         return false;

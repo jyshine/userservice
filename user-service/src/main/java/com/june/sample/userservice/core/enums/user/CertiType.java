@@ -1,6 +1,6 @@
 package com.june.sample.userservice.core.enums.user;
 
-public enum PhoneValidationType {
+public enum CertiType {
     /** 인증번호 전송 상태 */
     SEND_CODE,
 
