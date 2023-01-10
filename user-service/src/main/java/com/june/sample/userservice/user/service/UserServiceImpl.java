@@ -9,6 +9,7 @@ import com.june.sample.userservice.user.domain.dto.UserRegDTO;
 import com.june.sample.userservice.user.domain.dto.UserSearchDTO;
 import com.june.sample.userservice.user.domain.model.UserEntity;
 import com.june.sample.userservice.user.domain.repository.UserRepository;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -43,7 +44,7 @@ public class UserServiceImpl implements UserService{
                 .phoneNumber(userDto.getPhoneNumber())
                 .role(UserRoleType.N)
                 .build();
-
+        buildUser.setCreatedDate(LocalDateTime.now());
         userRepository.save(buildUser);
 
         return true;
@@ -78,6 +79,7 @@ public class UserServiceImpl implements UserService{
                     .build();
         }
 
+
         userCodeDTO.setCode(certificationCode);
         userCodeDTO.setPhoneNumber(phoneNumber);
 
@@ -96,7 +98,7 @@ public class UserServiceImpl implements UserService{
                         .withUserMessageKey("api.users.code.check")
                         .build();
             }
-
+            user.setUpdatedDate(LocalDateTime.now());
             user.setRole(UserRoleType.U);
             userRepository.save(user);
 

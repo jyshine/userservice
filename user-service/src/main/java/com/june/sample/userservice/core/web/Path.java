@@ -7,4 +7,5 @@ public class Path {
     public static final String USERS_SEARCH = API + VERSION + "/users/search";
     public static final String USERS_SEND_CODE = API + VERSION + "/users/sendCode";
     public static final String USERS_SEND_CODE_CHECK = API + VERSION + "/users/sendCode/check";
+    public static final String USERS_CHANGE_PASSWORD = API + VERSION + "/users/changePassword";
 }

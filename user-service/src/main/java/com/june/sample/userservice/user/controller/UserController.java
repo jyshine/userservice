@@ -1,6 +1,7 @@
 package com.june.sample.userservice.user.controller;
 
 import static com.june.sample.userservice.core.web.Path.USERS;
+import static com.june.sample.userservice.core.web.Path.USERS_CHANGE_PASSWORD;
 import static com.june.sample.userservice.core.web.Path.USERS_SEARCH;
 import static com.june.sample.userservice.core.web.Path.USERS_SEND_CODE;
 import static com.june.sample.userservice.core.web.Path.USERS_SEND_CODE_CHECK;
@@ -38,15 +39,22 @@ public class UserController {
         return new RestResponse<>(userService.searchUserByUserName(userName));
     }
 
-    @ApiOperation(value = "전화번호 인증 전송")
+    @ApiOperation(value = "전화번호 인증 전송 (임시)")
     @PostMapping(value = USERS_SEND_CODE)
     public RestResponse<UserCodeDTO> sendCode(@RequestBody UserCodeDTO userCodeDTO) {
         return new RestResponse<>(userService.getCertificationCodeByUserPhoneNumber(userCodeDTO.getPhoneNumber()));
     }
 
-    @ApiOperation(value = "전화번호 인증 번호 확인")
+    @ApiOperation(value = "전화번호 인증 번호 확인 (임시)")
     @PostMapping(value = USERS_SEND_CODE_CHECK)
     public RestResponse<Boolean> sendCodeCheck(@RequestBody UserCodeDTO userCodeDTO) {
+        return new RestResponse<>(userService.checkCertificationCode(userCodeDTO));
+    }
+
+    @ApiOperation(value = "비밀번호 찾기 (재설정)")
+    @PostMapping(value = USERS_CHANGE_PASSWORD)
+    public RestResponse<Boolean> usersChangePassword(@RequestBody UserCodeDTO userCodeDTO) {
+
         return new RestResponse<>(userService.checkCertificationCode(userCodeDTO));
     }
 }

@@ -1,6 +1,7 @@
 package com.june.sample.userservice.user.domain.model;
 
 import com.june.sample.userservice.core.enums.user.UserRoleType;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -18,7 +19,7 @@ import lombok.Setter;
 @Entity(name = "users")
 @Getter
 @NoArgsConstructor
-public class UserEntity {
+public class UserEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
