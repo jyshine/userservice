@@ -36,8 +36,8 @@ public class UserController {
 
     @ApiOperation(value = "내 정보 보기")
     @GetMapping(value = USERS_SEARCH)
-    public RestResponse<UserSearchDTO> searchUserByUserName(@RequestParam String userName) {
-        return new RestResponse<>(userService.searchUserByUserName(userName));
+    public RestResponse<UserSearchDTO> searchUserByUserName(@RequestParam String phoneNumber) {
+        return new RestResponse<>(userService.searchUserInfo(phoneNumber));
     }
 
     @ApiOperation(value = "전화번호 인증 전송 (임시)")

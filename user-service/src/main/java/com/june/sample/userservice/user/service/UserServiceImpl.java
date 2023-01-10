@@ -144,6 +144,13 @@ public class UserServiceImpl implements UserService{
             .build();
     }
 
+    @Override
+    public UserSearchDTO searchUserInfo(String phoneNumber) {
+        UserEntity user = userRepository.findByPhoneNumber(phoneNumber)
+                .orElseThrow(() -> BizException.withUserMessage("회원 정보가 없습니다").build());
+        return modelMapper.map(user, UserSearchDTO.class);
+    }
+
     private boolean checkValidationPhone(String phoneNumber) {
         ValidationPhoneEntity byPhoneNumber = validationPhoneRepository.findByPhoneNumber(phoneNumber)
                 .orElseThrow(() -> ValidationException.withUserMessage("전화번호 인증 대상이 없습니다.").build());

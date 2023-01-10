@@ -20,4 +20,6 @@ public interface UserService {
     boolean checkCertificationCode(UserCodeDTO userCodeDTO);
 
     boolean changeUserPassword(UserRegDTO userRegDTO);
+
+    UserSearchDTO searchUserInfo(String phoneNumber);
 }
