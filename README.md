@@ -11,7 +11,7 @@
 - docker 로 DB 설치
 ```
 # 프로젝트 폴더(userservice) 디렉토리 기준
-$ cd user-service/docker
+$ cd user-service/docker
 $ docker-compose up -d
 
 # 삭제
