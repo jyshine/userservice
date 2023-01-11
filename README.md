@@ -53,6 +53,6 @@ $ curl -u front-ui:front-ui! http://localhost:8080/oauth/token -F grant_type=pas
 - 비밀번호 재설정 기능
 
 **5. 추가 예정**
-- Request 데이터 Validation 
+- 유효성 검사 및 예외처리 추가
 - AOP 이용하여 회원정보 생성
 
