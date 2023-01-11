@@ -46,13 +46,13 @@ $ curl -u front-ui:front-ui! http://localhost:8080/oauth/token -F grant_type=pas
 
 
 
-
 **4. 요구사항**
 - 회원 가입 기능
 - 로그인 기능
 - 내 정보 보기 기능
 - 비밀번호 재설정 기능
 
-
-
+**5. 추가 예정**
+- Request 데이터 Validation 
+- HandlerInterceptor 이용하여 회원정보 생성
 
