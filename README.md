@@ -54,5 +54,5 @@ $ curl -u front-ui:front-ui! http://localhost:8080/oauth/token -F grant_type=pas
 
 **5. 추가 예정**
 - Request 데이터 Validation 
-- Interceptor 이용하여 회원정보 생성
+- @Aspect 이용하여 회원정보 생성
 
